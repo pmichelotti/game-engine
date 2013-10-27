@@ -45,6 +45,9 @@ define( [], function() {
          */
         this.loaded = false;
 
+        /*
+         * The ID of the current frame
+         */
         this.currentFrame = null;
 
         /*
