@@ -1,6 +1,6 @@
 define(
-        [],
-        function() {
+        [ 'interaction/InteractionTypes' ],
+        function( InteractionTypes ) {
 
             var KEY_EVENT_INTERACTION_TYPE = 'key-event';
 
@@ -10,11 +10,14 @@ define(
 
                 var self = this;
 
+                this.game = null;
+                this.gameEngine = null;
+
                 this.keyCodeInteractionMap = {};
                 this.keyInteractionTypeMap = {
-                    "keydown" : "start",
-                    "keyup" : "stop",
-                    "keypress" : "execute"
+                    "keydown" : InteractionTypes.START,
+                    "keyup" : InteractionTypes.STOP,
+                    "keypress" : InteractionTypes.EXECUTE
                 };
 
                 /**
@@ -36,10 +39,20 @@ define(
                  * will be the keyCode associated with the concrete Event</li>
                  * </ul>
                  */
-                this.registerGame = function( game ) {
-                    if ( !game || !game.interactions ) {
-                        return;
-                    }
+                this.registerGame = function( game, gameEngine ) {
+
+                    self.game = game;
+                    self.gameEngine = gameEngine;
+
+                    /*
+                     * Remove all key event listeners from the document body and register a single listener which will
+                     * handle all key events
+                     * 
+                     * TODO: Removal
+                     */
+                    document.addEventListener( 'keydown', self.handleInteraction );
+                    document.addEventListener( 'keyup', self.handleInteraction );
+                    document.addEventListener( 'keypress', self.handleInteraction );
 
                     self.keyCodeInteractionMap = {};
 
@@ -71,24 +84,23 @@ define(
                 };
 
                 /**
+                 * Looks through the internal interaction map to determine if the concrete interaction passed can be
+                 * handled by this engine. If it can then a handler is called on the game engine.
                  * 
                  * @param interaction
                  *            A JavaScript Event object representing the user interaction which requires handling.
-                 * @callback A function which will take two parameters. First is the id of the abstract interaction type
-                 *           associated with the concrete interaction, or null if no such mapping was found. Second is
-                 *           the type of interaction. There are three types of interaction - 'start', 'stop', and
-                 *           'execute'. For example, in the kase of keyboard events, these three types line up with
-                 *           'keydown', 'keyup', and 'keypress'.
                  */
-                this.handleInteraction = function( interaction, callback ) {
+                this.handleInteraction = function( interaction ) {
 
                     /*
                      * Check whether the interaction is a keyboard interaction and handle it appropriately if so
                      */
                     if ( interaction && interaction.type && interaction.keyCode ) {
+
                         if ( self.keyCodeInteractionMap[ interaction.keyCode ]
                                 && self.keyInteractionTypeMap[ interaction.type ] ) {
-                            callback( self.keyCodeInteractionMap[ interaction.keyCode ],
+
+                            self.gameEngine.handleInteraction( self.keyCodeInteractionMap[ interaction.keyCode ],
                                     self.keyInteractionTypeMap[ interaction.type ] );
 
                             /*
@@ -98,7 +110,9 @@ define(
                             interaction.preventDefault();
 
                             return false;
+
                         }
+
                     }
                 };
 

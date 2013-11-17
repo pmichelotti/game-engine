@@ -1,4 +1,4 @@
-define( [], function() {
+define( [ 'screen/factory/screenFactoryRegistry' ], function( screenFactoryRegistry ) {
 
     /**
      * 

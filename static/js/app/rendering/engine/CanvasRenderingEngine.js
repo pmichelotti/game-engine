@@ -127,4 +127,6 @@ define( [], function() {
         };
     };
 
+    return CanvasRenderingEngine;
+
 } );
