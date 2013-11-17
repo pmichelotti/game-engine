@@ -10,6 +10,8 @@ define( [ 'game/Game' ], function( Game ) {
         this.screenFactory = options.screenFactory;
         this.screenFlowFactory = options.screenFlowFactory;
         this.interactionFactory = options.interactionFactory;
+        this.gameClockFactory = options.gameClockFactory;
+        this.propertiesFactory = options.propertiesFactory;
 
         var makeSprites = function( spritesJson, options ) {
 
@@ -27,11 +29,9 @@ define( [ 'game/Game' ], function( Game ) {
 
             var retScreens = {};
 
-            for ( var curScreenKey in screensJson ) {
-
-                retScreens[ curScreenKey ] = self.screenFactory.make( curScreenJson, options );
-
-            }
+            screensJson.forEach( function( curScreenJson ) {
+                retScreens[ curScreenJson.id ] = self.screenFactory.make( curScreenJson, options );
+            } );
 
             return retScreens;
 
@@ -39,7 +39,7 @@ define( [ 'game/Game' ], function( Game ) {
 
         var makeScreenFlow = function( screenFlowJson, options ) {
 
-            return screenFlowFactory.make( screenFlowJson, options );
+            return self.screenFlowFactory.make( screenFlowJson, options );
 
         };
 
@@ -47,18 +47,29 @@ define( [ 'game/Game' ], function( Game ) {
 
             var retInteractions = {};
 
-            for ( var curInteractionKey in interactionsJson ) {
-
-                retInteractions[ curInteractionKey ] = self.interactionFactory.make(
-                        interactionsJson[ curInteractionKey ], options );
-
-            }
+            interactionsJson.forEach( function( curInteractionJson ) {
+                retInteractions[ curInteractionJson.id ] = self.interactionFactory.make( curInteractionJson, options );
+            } );
 
             return retInteractions;
 
         };
 
         var makeGameClocks = function( clocksJson, options ) {
+
+            var retGameClocks = {};
+
+            clocksJson.forEach( function( curGameClockJson ) {
+                retGameClocks[ curGameClockJson.id ] = self.gameClockFactory.make( curGameClockJson, options );
+            } );
+
+            return retGameClocks;
+
+        };
+
+        var makeProperties = function( propertiesJson, options ) {
+
+            return self.propertiesFactory.make( propertiesJson, options );
 
         };
 
@@ -74,6 +85,7 @@ define( [ 'game/Game' ], function( Game ) {
             gameOptions[ 'screens' ] = makeScreens( gameJson.screens, gameOptions );
             gameOptions[ 'screenFlow' ] = makeScreenFlow( gameJson.screenFlow, gameOptions );
             gameOptions[ 'clocks' ] = makeGameClocks( gameJson.gameClocks, gameOptions );
+            gameOptions[ 'properties' ] = makeProperties( gameJson.properties, gameOptions );
 
             return new Game( gameOptions );
 

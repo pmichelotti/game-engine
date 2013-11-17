@@ -1,13 +1,15 @@
 define( [ 'game/engine/GameEngine', 'game/factory/GameFactory', 'setup/gameEngine/gameEngineOptions',
-        'setup/gameFactory/gameFactoryOptions' ], function( GameEngine, GameFactory, gameEngineOptions,
-        gameFactoryOptions ) {
+        'setup/gameFactory/gameFactoryOptions', 'http/HttpHelper' ], function( GameEngine, GameFactory,
+        gameEngineOptions, gameFactoryOptions, HttpHelper ) {
 
     var gameFactory = new GameFactory( gameFactoryOptions );
 
-    var testGame = gameFactory.make( {} );
+    HttpHelper.get( url, function( gameJson ) {
 
-    var gameEngine = new GameEngine( gameEngineOptions );
+        var loadedGame = gameFactory.make( gameJson );
+        var gameEngine = new GameEngine( gameEngineOptions );
+        gameEngine.startGame( loadedGame );
 
-    gameEngine.startGame( testGame );
+    } );
 
 } );

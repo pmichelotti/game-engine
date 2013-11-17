@@ -77,6 +77,8 @@ define( [ 'timing/clock/ClockFactory' ], function( ClockFactory ) {
 
         this.start = function( options ) {
 
+            setInterval( self.tick, self.ticksPerSecond );
+
         };
 
         /**

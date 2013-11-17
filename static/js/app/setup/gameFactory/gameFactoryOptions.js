@@ -1,20 +1,25 @@
 define( [ 'sprite/factory/SpriteFromJsonFactory', 'screen/factory/ScreenFromJsonFactory',
         'screen/types/singleFrameScreen/factory/SingleFrameScreenFromJsonFactory',
-        'screenFlow/factory/ScreenFlowFromJsonFactory' ], function( SpriteFactory, ScreenFactory,
-        SingleFrameScreenFactory, ScreenFlowFactory ) {
+        'screenFlow/factory/ScreenFlowFromJsonFactory', 'interaction/factory/InteractionFromJsonFactory',
+        'properties/factory/GamePropertiesFromJsonFactory', 'timing/clock/ClockFactory' ],
+        function( SpriteFactory, ScreenFactory, SingleFrameScreenFactory, ScreenFlowFactory, InteractionFactory,
+                PropertiesFactory, ClockFactory ) {
 
-    var screenFactoryRegistry = {};
+            var screenFactoryRegistry = {};
 
-    screenFactoryRegistry[ SingleFrameScreenFactory.type ] = new SingleFrameScreenFactory();
+            screenFactoryRegistry[ SingleFrameScreenFactory.type ] = new SingleFrameScreenFactory();
 
-    var gameFactoryOptions = {
-        spriteFactory : new SpriteFactory(),
-        screenFactory : new ScreenFactory( {
-            screenFactoryRegistry : screenFactoryRegistry
-        } ),
-        screenFlowFactory : new ScreenFlowFactory()
-    };
+            var gameFactoryOptions = {
+                spriteFactory : new SpriteFactory(),
+                screenFactory : new ScreenFactory( {
+                    screenFactoryRegistry : screenFactoryRegistry
+                } ),
+                screenFlowFactory : new ScreenFlowFactory(),
+                interactionFactory : new InteractionFactory(),
+                propertiesFactory : new PropertiesFactory(),
+                gameClockFactory : new ClockFactory()
+            };
 
-    return gameFactoryOptions;
+            return gameFactoryOptions;
 
-} );
+        } );

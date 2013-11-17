@@ -26,8 +26,8 @@ define( [], function() {
             self.screenEngine.registerGame( currentGame, self );
             self.timingEngine.registerGame( currentGame, self );
             self.renderingEngine.registerGame( currentGame, self );
-            self.musicEngine.registerGame( currentGame, self );
-            self.soundEffectsEngine.registerGame( currentGame, self );
+            // self.musicEngine.registerGame( currentGame, self );
+            // self.soundEffectsEngine.registerGame( currentGame, self );
 
             /*
              * Start the timing engine

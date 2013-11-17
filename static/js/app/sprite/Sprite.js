@@ -21,6 +21,8 @@ define( [], function() {
      *            <li>position : A position object representing the top left pixel of the frame in the Sprite's image</li>
      *            </ul>
      *            </p>
+     * 
+     * TODO: Frame Group Handling
      */
     var Sprite = function( id, options ) {
 
@@ -31,7 +33,7 @@ define( [], function() {
         this.id = id;
 
         /*
-         * Path to the image asset
+         * Name of the image asset
          */
         this.image = options.image;
 
@@ -64,6 +66,7 @@ define( [], function() {
 
             options.frames.forEach( function( curFrameDefinition ) {
                 self.frames[ curFrameDefinition.id ] = {
+                    id : curFrameDefinition.id,
                     width : curFrameDefinition.width,
                     height : curFrameDefinition.height,
                     position : curFrameDefinition.position

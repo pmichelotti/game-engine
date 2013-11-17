@@ -6,7 +6,7 @@ define( [ 'sprite/Sprite' ], function( Sprite ) {
      * 
      * <ul>
      * <li>id : The String ID of the Sprite</li>
-     * <li>image : A path to the Image asset representing the Sprite</li>
+     * <li>image : The name of the Image asset representing the Sprite</li>
      * <li>frames : An array of Frame Definitions</li>
      * </ul>
      * 
