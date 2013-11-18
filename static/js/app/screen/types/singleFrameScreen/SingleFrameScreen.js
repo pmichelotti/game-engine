@@ -26,11 +26,14 @@ define( [ 'interaction/InteractionTypes' ], function( InteractionTypes ) {
         /**
          * Registers the game engine with the screen instance and resets the duration in case the screen was previously
          * used. This method is called by the game engine when this screen becomes the current screen.
+         * 
+         * This method will also set the screen height in the game engine which affects the final rendering.
          */
         this.start = function( gameEngine ) {
 
             self.gameEngine = gameEngine;
             remainingDuration = self.duration;
+            self.gameEngine.setScreenSize( self.size.width, self.size.height );
             acceptingInteractions = true;
 
         };

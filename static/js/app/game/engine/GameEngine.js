@@ -74,6 +74,10 @@ define( [], function() {
             self.renderingEngine.renderSprite( sprite, position );
         };
 
+        this.clear = function() {
+            self.renderingEngine.clear();
+        };
+
     };
 
     return GameEngine;

@@ -66,6 +66,8 @@ define( [], function() {
 
         this.render = function() {
 
+            self.gameEngine.clear();
+
             /*
              * Render the current screen
              */

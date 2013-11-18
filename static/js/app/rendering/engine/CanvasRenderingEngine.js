@@ -125,6 +125,11 @@ define( [], function() {
                     renderPosition.x, renderPosition.y, renderWidth, renderHeight );
 
         };
+
+        this.clear = function() {
+            self.canvasContext.clearRect( 0, 0, self.canvas.width, self.canvas.height );
+        };
+
     };
 
     return CanvasRenderingEngine;
